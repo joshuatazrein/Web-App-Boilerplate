@@ -4,11 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "copy": "cp -r shared/* frontend/ && cp -r shared/* backend/",
+    "copy": "cp -a shared/. frontend && cp -a shared/. backend",
     "build": "npm run copy && cd frontend && npm run build && cd ../backend && npm run build && cd .. && npm run collect-build",
-    "collect-build": "cp -r backend/dist/* dist/server && cp -r frontend/dist/* dist"
+    "collect-build": "cp -a backend/dist/. dist/server && cp -a frontend/dist/. dist",
+    "start": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "kill": "kill $(lsof -i :3001)"
   },
   "keywords": [],
   "author": "Joshua Tazman Reinier",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
 }
